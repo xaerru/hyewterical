@@ -38,32 +38,36 @@ pub enum Msg {
 #[derive(Debug)]
 pub struct Home {
     fetch_task: Option<FetchTask>,
-    iss: Option<Data>,
+    data: Option<Data>,
     link: ComponentLink<Self>,
     error: Option<String>,
 }
 
 impl Home {
-    fn view_iss_location(&self) -> Html {
-        match self.iss {
+    fn view_joke(&self) -> Html {
+        match self.data {
             Some(ref joke) => {
                 html! {
                     <>
-                        <p>{ format!("{}", joke.setup) }</p>
-                        <p>{ format!("{}", joke.delivery) }</p>
+                      <p>{ format!("{}", joke.setup) }</p>
+                      <p>{ format!("{}", joke.delivery) }</p>
                     </>
                 }
             }
             None => {
-                html! {}
+                html! {
+                    <header class="app-header">
+                    { "Press the button to generate a joke" }
+                    </header>
+                }
             }
         }
     }
     fn view_fetching(&self) -> Html {
         if self.fetch_task.is_some() {
-            html! { <p>{ "Generating...." }</p> }
+            html! { <p>{ "Fetching...." }</p> }
         } else {
-            html! { <p></p> }
+            html! { <p>{"That's hysterical"}</p> }
         }
     }
     fn view_error(&self) -> Html {
@@ -82,7 +86,7 @@ impl Component for Home {
     fn create(_props: Self::Properties, link: ComponentLink<Self>) -> Self {
         Self {
             fetch_task: None,
-            iss: None,
+            data: None,
             link,
             error: None,
         }
@@ -112,7 +116,7 @@ impl Component for Home {
             ReceiveResponse(response) => {
                 match response {
                     Ok(location) => {
-                        self.iss = Some(location);
+                        self.data = Some(location);
                     }
                     Err(error) => self.error = Some(error.to_string()),
                 }
@@ -123,14 +127,12 @@ impl Component for Home {
     }
     fn view(&self) -> Html {
         html! {
-            <div class="app">
-                <header class="app-header">
-                    <code> { "Press the button to generate a joke" } </code>
-                    <p>
-                        { self.view_fetching() } { self.view_iss_location() } { self.view_error()}
+            <div class="app-header">
+                <p class="fetch">{self.view_fetching()}</p>
+                    <p class="joke">
+                      { self.view_joke() } { self.view_error()}
                     </p>
-                    <button onclick=self.link.callback( | _ | Msg::GetLocation)> { "Get The Joke!!!" } </button>
-                </header>
+                <button class="button" onclick=self.link.callback( | _ | Msg::GetLocation)> { "Get The Joke!!!" } </button>
             </div>
         }
     }
