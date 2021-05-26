@@ -24,7 +24,7 @@ impl Component for Nav {
             <nav>
               <ul>
                 <li>
-                  <a class="app-link" href="https://github.com/grvxs" target="_blank" rel="noopener noreferrer">
+                  <a class="app-link" href="https://github.com/grvxs/hyewterical" target="_blank" rel="noopener noreferrer">
                     { "Github" }
                    </a>
                  </li>
