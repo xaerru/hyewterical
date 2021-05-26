@@ -1,33 +1,12 @@
-use serde::Deserialize;
+mod types;
+
 use yew::services::fetch::{FetchService, FetchTask, Request, Response};
 use yew::{
     format::{Json, Nothing},
     prelude::*,
 };
 
-#[derive(Deserialize, Debug, Clone)]
-pub struct Flags {
-    nsfw: bool,
-    religious: bool,
-    political: bool,
-    racist: bool,
-    sexist: bool,
-    explicit: bool,
-}
-
-#[derive(Deserialize, Debug, Clone)]
-pub struct Data {
-    error: bool,
-    category: String,
-    #[serde(rename = "type")]
-    type_field: String,
-    setup: String,
-    delivery: String,
-    flags: Flags,
-    id: i64,
-    safe: bool,
-    lang: String,
-}
+use types::*;
 
 #[derive(Debug)]
 pub enum Msg {
