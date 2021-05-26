@@ -1,0 +1,1 @@
+{"version":3,"sources":["index.ts"],"names":[],"mappings":";;;;;;AAAA,IAAA,YAAA,GAAA,OAAA,CAAA,eAAA,CAAA;;AAEA,YAAA,CAAA,GAAA","file":"static.77de5100.js","sourceRoot":"../static","sourcesContent":["import { run } from '../Cargo.toml'\n\nrun()"]}

@@ -12,7 +12,6 @@ Cargo.lock
 
 # JS
 node_modules
-/dist
 /pkg
 /wasm-pack.log
 .cache/
